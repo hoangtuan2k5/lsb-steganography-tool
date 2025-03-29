@@ -1,28 +1,53 @@
-# Chương Trình Giấu Tin LSB Trong File WAV
-### Tác giả: Hoàng Chiều Nguyễn Tuấn
+# LSB Steganography Tool cho File WAV 🎵
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/hoang/LSBSteganographyTool)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Language](https://img.shields.io/badge/language-C%2B%2B-orange.svg)](https://isocpp.org/)
 
-Chương trình này sử dụng kỹ thuật LSB (Least Significant Bit) để giấu file bất kỳ vào file âm thanh WAV và có thể khôi phục lại file gốc sau đó.
+Công cụ giấu tin sử dụng kỹ thuật LSB (Least Significant Bit) cho phép giấu file bất kỳ vào file âm thanh WAV và khôi phục lại file gốc một cách an toàn.
 
-## Cách Hoạt Động
+## 📑 Mục Lục
+- [Tổng Quan](#tong-quan)
+- [Tính Năng](#tinh-nang)
+- [Yêu Cầu Hệ Thống](#yeu-cau-he-thong)
+- [Cài Đặt](#cai-dat)
+- [Cách Sử Dụng](#cach-su-dung)
+- [Cơ Chế Hoạt Động](#co-che-hoat-dong)
+- [Thông Số Kỹ Thuật](#thong-so-ky-thuat)
+- [Hạn Chế](#han-che)
+- [Đóng Góp](#dong-gop)
+- [Tác Giả](#tac-gia)
+- [Giấy Phép](#giay-phep)
 
-1. **Kỹ thuật LSB**: Chương trình sử dụng bit cuối cùng (LSB) của mỗi byte trong dữ liệu âm thanh WAV để lưu trữ dữ liệu cần giấu. Điều này gây ảnh hưởng tối thiểu đến chất lượng âm thanh.
+## 📋 Tổng Quan
+Chương trình này sử dụng kỹ thuật LSB để giấu file bất kỳ vào file âm thanh WAV một cách an toàn và hiệu quả. Việc thay đổi bit ít quan trọng nhất (LSB) trong dữ liệu âm thanh đảm bảo chất lượng âm thanh gần như không bị ảnh hưởng.
 
-2. **Cấu Trúc Dữ Liệu**:
-   - Lưu tên file gốc (bao gồm cả phần mở rộng)
-   - Lưu kích thước của file cần giấu (32 bit)
-   - Lưu nội dung của file cần giấu
+## ✨ Tính Năng
+- 🔒 Giấu file bất kỳ vào file WAV
+- 🔄 Khôi phục file gốc với độ chính xác 100%
+- 📝 Tự động lưu và khôi phục tên file gốc
+- 🎯 Hỗ trợ file WAV ở mọi độ sâu bit
+- 🔧 Giao diện dòng lệnh đơn giản
 
-## Biên Dịch
+## 💻 Yêu Cầu Hệ Thống
+- Hệ điều hành: Windows/Linux/macOS
+- Trình biên dịch C++ (GCC/G++)
+- File WAV không nén
 
+## ⚙️ Cài Đặt
+
+### Windows
+```batch
+compile.bat
+```
+
+### Linux/macOS
 ```bash
 g++ -o wav_stego wav_stego.cpp
 ```
 
-Hoặc chạy file `compile.bat` trên Windows.
+## 📖 Cách Sử Dụng
 
-## Cách Sử Dụng
-
-### Để Giấu File
+### Giấu File
 ```bash
 ./wav_stego -e <file_wav_goc> <file_can_giau> <file_wav_dau_ra>
 ```
@@ -32,14 +57,14 @@ Ví dụ:
 ./wav_stego -e original.wav secret.txt hidden.wav
 ```
 
-### Để Giải Mã File
+### Giải Mã File
 
-1. Tự động dùng tên file gốc:
+#### Tự động dùng tên file gốc
 ```bash
 ./wav_stego -d <file_wav_chua_du_lieu>
 ```
 
-2. Chỉ định tên file đầu ra tùy chọn:
+#### Chỉ định tên file đầu ra
 ```bash
 ./wav_stego -d <file_wav_chua_du_lieu> <ten_file_dau_ra>
 ```
@@ -53,31 +78,47 @@ Ví dụ:
 ./wav_stego -d hidden.wav extracted_file.txt
 ```
 
-## Thông Tin Kỹ Thuật
+## 🔍 Cơ Chế Hoạt Động
+### Kỹ Thuật LSB
+- Sử dụng bit cuối cùng (LSB) của mỗi byte trong dữ liệu âm thanh
+- Thay đổi tối thiểu, không ảnh hưởng đáng kể đến chất lượng âm thanh
 
-1. **Hỗ Trợ Định Dạng WAV**:
-   - Hỗ trợ file WAV chuẩn
-   - Giữ nguyên header WAV
-   - Hoạt động với file WAV ở mọi độ sâu bit
+### Cấu Trúc Dữ Liệu Giấu
+1. Tên file gốc (bao gồm phần mở rộng)
+2. Kích thước file (32 bit)
+3. Nội dung file
 
-2. **Dung Lượng**:
-   - Có thể giấu file với kích thước tối đa phụ thuộc vào kích thước file WAV
-   - Tự động lưu và khôi phục tên file gốc
-   - Cho phép đặt tên tùy chọn khi giải mã
+## 🛠 Thông Số Kỹ Thuật
 
-3. **Lưu Ý Về Bảo Mật**:
-   - Đây là cài đặt steganography cơ bản
-   - Không có mã hóa dữ liệu
-   - Có thể phát hiện sự hiện diện của dữ liệu ẩn qua phân tích thống kê
+### Định Dạng WAV
+- ✅ Hỗ trợ file WAV chuẩn
+- ✅ Giữ nguyên header WAV
+- ✅ Tương thích mọi độ sâu bit
 
-## Hạn Chế
+### Dung Lượng
+- 📦 Kích thước tối đa phụ thuộc vào file WAV
+- 🏷️ Tự động quản lý tên file
+- 🎯 Tùy chọn đặt tên khi giải mã
 
-1. Kích thước file cần giấu phải nhỏ hơn dung lượng cho phép của file WAV
+### Bảo Mật
+- 🔐 Steganography cơ bản
+- ⚠️ Không có mã hóa bổ sung
+- 📊 Có thể phát hiện qua phân tích thống kê
+
+## ⚠️ Hạn Chế
+1. Dung lượng file cần giấu phải nhỏ hơn khả năng chứa của file WAV
 2. Chỉ hoạt động với file WAV không nén
-3. File WAV đầu ra sẽ có thay đổi nhỏ ở các bit cuối
+3. File WAV đầu ra có thay đổi nhỏ ở các bit cuối
 
-## Tính Năng Mới
+## 🤝 Đóng Góp
+Mọi đóng góp đều được chào đón! Hãy tạo issue hoặc pull request nếu bạn muốn:
+- Báo lỗi
+- Thêm tính năng mới
+- Cải thiện tài liệu
+- Tối ưu mã nguồn
 
-- Hiển thị tên file gốc khi giải mã
-- Cho phép chọn tên file tùy ý khi giải mã
-- Tất cả thông báo và giao diện bằng tiếng Việt
+## 👨‍💻 Tác Giả
+**Hoàng Chiều Nguyễn Tuấn**
+
+## 📄 Giấy Phép
+Dự án này được phân phối dưới Giấy phép MIT. Xem file `LICENSE` để biết thêm chi tiết.
